@@ -9,23 +9,14 @@ const Login = () => {
 
 	const handleSubmit = async e => {
 		e.preventDefault()
-
 		const email = e.target[0].value
 		const password = e.target[1].value
 
-		console.log('Попытка входа в систему с email:', email)
-
 		try {
-			const userCredential = await signInWithEmailAndPassword(
-				auth,
-				email,
-				password
-			)
-			console.log('Успешный вход в систему:', userCredential.user)
+			await signInWithEmailAndPassword(auth, email, password)
 			navigate('/')
 		} catch (err) {
 			setErr(true)
-			console.error('Ошибка при регистрации:', err)
 		}
 	}
 
