@@ -1,22 +1,25 @@
 import { onAuthStateChanged } from 'firebase/auth'
-import { createContext, useEffect, useState } from 'react' // Добавьте импорт useState
-import { auth } from '../firebase' // Убедитесь, что этот импорт корректен
+import { createContext, useEffect, useState } from 'react'
+import { auth } from '../firebase'
 
 export const AuthContext = createContext()
 
 export const AuthContextProvider = ({ children }) => {
 	const [currentUser, setCurrentUser] = useState({})
+
 	useEffect(() => {
-		//очистка
-		const unsubscribe = onAuthStateChanged(auth, user => {
+		const unsub = onAuthStateChanged(auth, user => {
 			setCurrentUser(user)
+			console.log(user)
 		})
-		//возврат очистки
-		return unsubscribe
+
+		return () => {
+			unsub()
+		}
 	}, [])
+
 	return (
-		<AuthContext.Provider value={currentUser}>
-			{/* //currentUser => значение провайдера */}
+		<AuthContext.Provider value={{ currentUser }}>
 			{children}
 		</AuthContext.Provider>
 	)

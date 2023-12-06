@@ -2,13 +2,14 @@ import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth'
 import { doc, setDoc } from 'firebase/firestore'
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage'
 import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { auth, db, storage } from '../firebase'
 import Add from '../img/folder.png'
 
 const Register = () => {
 	const [err, setErr] = useState(false)
 	const navigate = useNavigate()
+
 	const handleSubmit = async e => {
 		e.preventDefault()
 
@@ -69,7 +70,9 @@ const Register = () => {
 					<button>Регистрация</button>
 					{err && <span>Упс, что-то пошло не так</span>}
 				</form>
-				<p>У вас уже есть аккаунт? Войти</p>
+				<p>
+					У вас уже есть аккаунт? <Link to='/login'>Войти</Link>
+				</p>
 			</div>
 		</div>
 	)
